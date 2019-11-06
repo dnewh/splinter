@@ -327,6 +327,162 @@ paths:
         500:
           description: Internal service error
 
+  /user/notifications:
+    get:
+      description: Retrieve a list of all notifications
+      responses:
+        200:
+          description: Notifications have been retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/Notification'
+        403:
+          description: User is forbidden to access this endpoint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: Publish a list of notifications
+      responses:
+        200:
+          description: Notifications have been published
+        400:
+          description: Malformed notifications list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/users/{user_id}/notifications:
+    get:
+      description: Retrieve a list of notifications for a given user from the notifications database
+      parameters:
+        - name: user_id
+          in: path
+          description: user to retrieve notifications for
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notifications have been retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/Notification'
+        403:
+          description: User is forbidden to retrieve notifications for this user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: notifications for {user} not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/users/{user_id}/notifications/{notification_id}:
+    get:
+      description: Fetch a notification for a given user
+      parameters:
+        - name: user_id
+          in: path
+          description: user to fetch a notification for
+          required: true
+          schema:
+            type: string
+        - name: notification_id
+          in: path
+          description: notification to fetch
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notification has been retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        403:
+          description: User is forbidden to retrieve notifications for this user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Notification {notification} for {user} not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      description: Update a notification for a given user
+      parameters:
+        - name: user_id
+          in: path
+          description: user to fetch a notification for
+          required: true
+          schema:
+            type: string
+        - name: notification_id
+          in: path
+          description: notification to fetch
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notification has been updated
+        403:
+          description: User is forbidden to update notifications for this user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Notification {notification} for {user} not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal service error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Error:
@@ -469,3 +625,36 @@ components:
         prev: /nodes?offset=0&limit=10
         next: /nodes?offset=20&limit=10
         last: /nodes?offset=40&limit=10
+
+    Notification:
+      type: object
+      properties:
+        hash:
+          type: string
+          example: 1c9b512cef6d6a9064d0cf0eb4b9a957af98bfcec3eb4be2bfb047cf73051cfcca8fa1c142ee12c419d36c55c391b7df38751dae64a1238dfe1e319e9ff22113
+        payload:
+          type: object
+          properties:
+            title:
+              type: string
+            body:
+              type: string
+        created:
+          type: string
+          example: Wed Nov 06 2019 13:30:54 GMT-0600
+        read:
+          type: boolean
+        origin:
+          type: string
+          example: grid-product-catalog
+        link:
+          type: string
+        recipients:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: object
+          additionalProperties: true
+          example:
+            productName: soybeans
