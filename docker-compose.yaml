@@ -48,3 +48,15 @@ services:
       build:
         context: .
         dockerfile: splinterd/api/openapi.dockerfile
+
+  biome-db:
+    image: postgres
+    restart: always
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: biome_admin
+      POSTGRES_PASSWORD: biome
+      POSTGRES_DB: biome
