@@ -14,6 +14,7 @@
 
 import sjcl from 'sjcl';
 import protos from '@/protobuf';
+// import { CircuitManagementPayload } from '@/compiled_protos';
 
 const signing = require('sawtooth-sdk/signing');
 const { Secp256k1PrivateKey } = require('sawtooth-sdk/signing/secp256k1');
@@ -117,5 +118,5 @@ function hexToBytes(hex: string) {
     for (i = 0; i < hex.length; i += 2) {
         bytes.push(parseInt(hex.substr(i, 2), 16));
     }
-    return bytes;
+    return Uint8Array.from(bytes);
 }

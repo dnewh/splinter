@@ -15,7 +15,10 @@
 import { Game } from '@/store/models';
 import { listGames, submitBatch } from '@/store/api';
 import { createTransaction, createBatch } from '@/utils/transactions';
+import { SabreTransactionBuilder } from '@/transactions/transaction';
+import { BatchBuilder } from '@/transactions/batch';
 import { calculateGameAddress } from '@/utils/addressing';
+import { Signer } from '@/transactions/signing';
 
 
 export interface GameState {
@@ -44,13 +47,27 @@ const actions = {
      commit('setGames', games);
   },
   async createGame({ commit, rootGetters }: any, {gameName, circuitID}: any) {
-     const user = rootGetters['user/getUser'];
+    const user = rootGetters['user/getUser'];
+    const signer = new Signer(user.privateKey);
      const payload = new Buffer(`${gameName},create,`, 'utf-8');
      const gameAdress = calculateGameAddress(gameName);
-     const transaction = createTransaction(payload, [gameAdress], [gameAdress], user);
-     const batchBytes = createBatch([transaction], user);
+    //  const transaction = createTransaction(payload, [gameAdress], [gameAdress], user);
+    const transaction = new SabreTransactionBuilder({
+      name: 'xo',
+      version: '0.3.3',
+      prefix: '5b7349'
+    })
+    .withInputs([gameAdress])
+    .withOutputs([gameAdress])
+    .withPayload(payload)
+    .build(signer);
+
+    const batch = new BatchBuilder()
+    .withTransactions([transaction])
+    .build(signer);
+    //  const batchBytes = createBatch([transaction], user);
      try {
-       const response = submitBatch(batchBytes, circuitID);
+       const response = submitBatch(batch, circuitID);
        return response;
      } catch (err) {
        throw err;

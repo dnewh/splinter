@@ -22,10 +22,14 @@ function replaceReferenceWithPromiseResolveExpression(resplacement) {
 }
 
 function saplingMacro({ references }) {
-  const { getUserSaplings = [], getConfigSaplings = [] } = references;
+  const {
+    getUserSaplings = [],
+    getConfigSaplings = []
+  } = references;
 
   const userSaplings = loadYaml('../saplings/userSaplings.yml');
   const configSaplings = loadYaml('../saplings/configSaplings.yml');
+
 
   getUserSaplings.forEach(
     replaceReferenceWithPromiseResolveExpression(userSaplings)

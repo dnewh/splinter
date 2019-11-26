@@ -22,6 +22,11 @@ import {
   computeContractRegistryAddress,
 } from '@/utils/addressing';
 
+import {
+  SabrePayload,
+  ExecuteContractAction,
+} from '@/tprotos/compiled_protos';
+
 const crypto = require('crypto');
 const { Transaction, TransactionHeader, Batch, BatchHeader, BatchList } = require('sawtooth-sdk/protobuf');
 
@@ -37,7 +42,7 @@ export function createTransaction(
   outputs: string[],
   user: User,
 ) {
-  const excuteTransactionAction = protos.ExecuteContractAction.create({
+  const excuteTransactionAction = ExecuteContractAction.create({
     name: 'xo',
     version: XO_FAMILY_VERSION,
     inputs,
@@ -45,8 +50,8 @@ export function createTransaction(
     payload: payloadBytes,
   });
 
-  const sabrePayload = protos.SabrePayload.encode({
-    action: protos.SabrePayload.Action.EXECUTE_CONTRACT,
+  const sabrePayload = SabrePayload.encode({
+    action: SabrePayload.Action.EXECUTE_CONTRACT,
     executeContract: excuteTransactionAction,
   }).finish();
 
