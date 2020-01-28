@@ -6,4 +6,5 @@
 - namespace: profile
   runtimeFiles:
     - 0.0.0.0:8675/profile.js
+  styleFiles: []
   workerFiles: []
