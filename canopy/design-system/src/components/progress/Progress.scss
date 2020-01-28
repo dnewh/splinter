@@ -17,9 +17,9 @@
 $progress-size: 6rem;
 
 $progress-colors: (
-  'background': $color-canopy,
+  'background': $color-primary,
   'gutter': $background-light,
-  'leaf': $color-canopy-light
+  'leaf': $color-primary-light
 );
 
 @function asRGBString($color) {

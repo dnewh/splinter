@@ -15,16 +15,16 @@
  */
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700|Roboto+Mono:400,700&display=swap');
 
-$fontFamily-primary: 'Noto Sans', 'Helvetica', sans-serif !default;
-$fontFamily-secondary: 'Roboto Mono', 'Helvetica', sans-serif !default;
-$fontFamily-code: 'Roboto Mono', monospace !default;
+:root {
+  --fontFamily-primary: 'Roboto', 'Helvetica', sans-serif;
+  --fontFamily-code: 'Roboto Mono', monospace;
+}
+
+$fontFamily-primary: var(--fontFamily-primary);
+$fontFamily-code: var(--fontFamily-code);
 
 .fontFamily-primary {
   font-family: $fontFamily-primary;
-}
-
-.fontFamily-secondary {
-  font-family: $fontFamily-secondary;
 }
 
 .fontFamily-code {
@@ -40,37 +40,37 @@ $fontFamily-code: 'Roboto Mono', monospace !default;
 }
 
 h1 {
-  @extend .fontFamily-secondary;
+  @extend .fontFamily-primary;
   @extend .fontWeight-bold;
   font-size: 4rem;
 }
 
 h2 {
-  @extend .fontFamily-secondary;
+  @extend .fontFamily-primary;
   @extend .fontWeight-regular;
   font-size: 3.5rem;
 }
 
 h3 {
-  @extend .fontFamily-secondary;
+  @extend .fontFamily-primary;
   @extend .fontWeight-regular;
   font-size: 3rem;
 }
 
 h4 {
-  @extend .fontFamily-secondary;
+  @extend .fontFamily-primary;
   @extend .fontWeight-bold;
   font-size: 2.5rem;
 }
 
 h5 {
-  @extend .fontFamily-secondary;
+  @extend .fontFamily-primary;
   @extend .fontWeight-regular;
   font-size: 2rem;
 }
 
 h6 {
-  @extend .fontFamily-secondary;
+  @extend .fontFamily-primary;
   @extend .fontWeight-regular;
   font-size: 1.5rem;
 }
@@ -89,7 +89,7 @@ b {
 }
 
 button {
-  @extend .fontFamily-secondary;
+  @extend .fontFamily-primary;
   @extend .fontWeight-regular;
   font-size: 1rem;
   letter-spacing: 1px;
