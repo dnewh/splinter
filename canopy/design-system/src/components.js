@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { NavItemExpandable } from './components/navigation/NavItemExpandable';
+export { default as NavItem } from './components/navigation/NavItem';
+export { default as SideNav } from './components/navigation/SideNav';
 export { default as Progress } from './components/progress/Progress';
 export { default as TabBox } from './components/tabBox/TabBox';

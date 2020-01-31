@@ -15,66 +15,63 @@
  */
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { NavItemExpandable } from './NavItemExpandable';
+import NavItem from './NavItem';
 
-import logo from '../../logo.svg';
-import './SideNav.scss';
+function SideNav(props) {
+  const { userSaplingRoutes } = props;
+  const userSaplingTabs = userSaplingRoutes.map(
+    ({ path, displayName, logo }) => {
+      return <NavItem key={path} path={path} label={displayName} logo={logo} />;
+    }
+  );
 
-export default class SideNav extends React.Component {
-  render() {
-    const { tabs } = this.props;
-    return (
-      <div className="side-nav borderRight-1 borderColor-smoke">
-        <div id="brand" className="paddingTop-m">
-          <img src={logo} className="app-logo paddingBottom-s" alt="logo" />
-          <span>
-            Canopy
-            <sup>design</sup>
-          </span>
+  return (
+    <div className="side-nav">
+      <a href="/" className="brand">
+        <div />
+      </a>
+      <div className="nav-items">
+        {userSaplingTabs}
+        <hr />
+        <div className="nav-tab">
+          <FontAwesomeIcon className="icon" icon="leaf" />
+          <div className="label">Saplings</div>
         </div>
-        <nav
-          id="tabs"
-          className=" marginTop-m
-                      borderWidth-0
-                      borderTopWidth-1
-                      borderStyle-solid
-                      borderColor-smoke"
-        >
-          <ul>
-            {tabs.map(tab => {
-              if (tab.nested) {
-                return (
-                  <NavItemExpandable
-                    nested={tab.nested}
-                    key={tab.name}
-                    aria-label={tab.name}
-                  >
-                    <span>{tab.name}</span>
-                  </NavItemExpandable>
-                );
-              }
-              return (
-                <li className="tab paddingTop-s paddingBottom-s" key={tab.name}>
-                  <NavLink to={tab.route} aria-label={tab.name}>
-                    {tab.name}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
       </div>
-    );
-  }
+      <div className="canopy-items">
+        <ProfileTab />
+      </div>
+    </div>
+  );
+}
+
+function ProfileTab() {
+  const profileClasses = classnames('profile-tab', 'tab', {
+    'page-active': `${window.location.pathname.split('/')[1]}` === 'profile'
+  });
+
+  return (
+    <a href="/profile" className={profileClasses}>
+      <FontAwesomeIcon className="icon" icon="user-circle" />
+    </a>
+  );
 }
 
 SideNav.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.object)
+  userSaplingRoutes: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      displayName: PropTypes.string.isRequired
+    })
+  )
 };
 
 SideNav.defaultProps = {
-  tabs: []
+  userSaplingRoutes: []
 };
+
+export default SideNav;
