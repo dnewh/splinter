@@ -1,7 +1,7 @@
 {
   "name": "canopy-design-system",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "lib/components.min.js",
   "componentsMain": "lib/components.js",
   "componentsBrowser": "lib/components.umd.js",
@@ -14,6 +14,7 @@
     "app:build": "react-scripts build",
     "build": "yarn rollup:build",
     "postbuild": "yarn pack && tar -xvzf *.tgz && rm -rf package *.tgz",
+    "postinstall": "yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|scss|md)\"",
@@ -91,5 +92,6 @@
     "rollup-plugin-sass": "^1.2.2",
     "rollup-plugin-terser": "^5.1.3",
     "rollup-plugin-uglify": "^6.0.4"
-  }
+  },
+  "license": "Apache-2.0"
 }

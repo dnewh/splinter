@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "postinstall": "cd canopy/design-system; npm run build"
+  }
+}
