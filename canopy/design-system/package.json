@@ -12,14 +12,14 @@
   "scripts": {
     "start": "react-scripts start",
     "app:build": "react-scripts build",
-    "build": "npm run rollup:build",
+    "build": "npm run rollup:build && npm run rollup:clean",
     "postbuild": "npm run pack && tar -xvzf *.tgz && rm -rf package *.tgz",
     "postinstall": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|scss|md)\"",
     "lint": "eslint .",
-    "rollup:build": "NODE_ENV=production rollup -c && npm run rollup:clean",
+    "rollup:build": "NODE_ENV=production rollup -c",
     "rollup:clean": "cd lib/themes; each '*/index.js' -- rm index.js"
   },
   "husky": {

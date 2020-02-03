@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "postinstall": "cd canopy/design-system; npm i; npm run build"
+    "postinstall": "cd canopy/design-system; npm i; npm run rollup:build"
   }
 }
