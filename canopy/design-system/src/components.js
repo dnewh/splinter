@@ -16,3 +16,4 @@
 export { NavItemExpandable } from './components/navigation/NavItemExpandable';
 export { default as Progress } from './components/progress/Progress';
 export { default as TabBox } from './components/tabBox/TabBox';
+export {default as Input } from './components/form/Input';
